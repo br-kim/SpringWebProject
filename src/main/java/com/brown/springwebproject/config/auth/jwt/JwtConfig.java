@@ -1,5 +1,6 @@
 package com.brown.springwebproject.config.auth.jwt;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,7 +13,9 @@ import javax.crypto.spec.SecretKeySpec;
 @Configuration
 @EnableWebSecurity
 public class JwtConfig {
-    private final String secretKey = "2b7820d488114e324c8be406b7818a20a61b666229d0b5ed03c3f2318382140a";
+
+    @Value("${jwt.secret.key}")
+    private String secretKey;
 
 //    @Bean
 //    public SecurityFilterChain jwtChain(HttpSecurity http, SimpleJwtAuthenticationConverter jwtAuthenticationConverter) throws Exception{
@@ -28,7 +31,7 @@ public class JwtConfig {
     @Bean
     public JwtDecoder jwtDecoder() {
         MacAlgorithm algorithm = MacAlgorithm.HS256;
-
+        System.out.println("value"+secretKey);
         return NimbusJwtDecoder.withSecretKey(new SecretKeySpec(secretKey.getBytes(), algorithm.getName()))
                 .macAlgorithm(algorithm)
                 .build();
