@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.Collection;
 
 @Component
-public class MemberJwtAuthenticationConverter extends SimpleJwtAuthenticationConverter {
+public class UserJwtAuthenticationConverter extends SimpleJwtAuthenticationConverter {
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt, Collection<GrantedAuthority> authorities) {
-        return new MemberJwtToken(jwt, authorities);
+        return new UserJwtToken(jwt, authorities);
     }
 }

@@ -7,11 +7,11 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import java.util.Collection;
 
 
-public class MemberJwtToken extends JwtAuthenticationToken {
+public class UserJwtToken extends JwtAuthenticationToken {
 
     private final Long memberId;
 
-    public MemberJwtToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities) {
+    public UserJwtToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities) {
         super(jwt, authorities);
         this.memberId = Long.valueOf(jwt.getClaimAsString("member_id"));
     }
