@@ -10,7 +10,6 @@ import com.nimbusds.jwt.SignedJWT;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 
@@ -22,14 +21,14 @@ public class JwtProvider {
         this.secretKey = secretKey;
     }
 
-    public String generateAccessToken(Map<String, Object> claims) throws Exception {
+    public String generateAccessToken(UserJwtTokenDto userJwtTokenDto) throws Exception {
         Duration expirationTime = Duration.ofHours(6);
-        return generateToken(claims, expirationTime);
+        return generateToken(userJwtTokenDto.getClaim(), expirationTime);
     }
 
-    public String generateRefreshToken(Map<String, Object> claims) throws Exception {
+    public String generateRefreshToken(UserJwtTokenDto userJwtTokenDto) throws Exception {
         Duration expirationTime = Duration.ofHours(24);
-        return generateToken(Collections.emptyMap(), expirationTime);
+        return generateToken(userJwtTokenDto.getClaim(), null);
     }
 
     private String generateToken(Map<String, Object> claims, Duration expirationTime) throws Exception {

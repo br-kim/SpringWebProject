@@ -1,6 +1,7 @@
 package com.brown.springwebproject.config.auth.oauth2;
 
 import com.brown.springwebproject.config.auth.jwt.JwtProvider;
+import com.brown.springwebproject.config.auth.jwt.UserJwtTokenDto;
 import com.brown.springwebproject.user.domain.UserRepository;
 import com.brown.springwebproject.user.domain.Users;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +42,10 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         Map<String, Object> attribute = oAuth2User.getAttributes();
         Users user = userRepository.findByEmail((String) attribute.get("email")).orElseThrow();
-        Map<String, Object> tokenData = Map.of("email",user.getEmail(), "id",user.getId());
-        String accessToken = jwtProvider.generateAccessToken(tokenData);
-        String refreshToken = jwtProvider.generateRefreshToken(tokenData);
+//        Map<String, Object> tokenData = Map.of("email",user.getEmail(), "id",user.getId());
+        UserJwtTokenDto token = new UserJwtTokenDto(user.getId(), user.getEmail());
+        String accessToken = jwtProvider.generateAccessToken(token);
+        String refreshToken = jwtProvider.generateRefreshToken(token);
         return new UserJwtToken(accessToken, refreshToken);
     }
 
