@@ -1,13 +1,13 @@
 package com.brown.springwebproject.config.auth.jwt;
 
-import com.nimbusds.jose.JOSEObjectType;
-import com.nimbusds.jose.JWSAlgorithm;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jwt.JWT;
 import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
 import com.nimbusds.jwt.SignedJWT;
 
+import java.text.ParseException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
@@ -19,6 +19,22 @@ public class JwtProvider {
 
     public JwtProvider(String secretKey) {
         this.secretKey = secretKey;
+    }
+
+
+    public JWTClaimsSet getClaimFromToken(String token) {
+        try {
+            String tokenContent = token.split(" ")[1];
+            JWT parsedToken = JWTParser.parse(tokenContent);
+            JWSObject.parse(tokenContent);
+
+            JWTClaimsSet claims = parsedToken.getJWTClaimsSet();
+            return claims;
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public String generateAccessToken(UserJwtTokenDto userJwtTokenDto) throws Exception {

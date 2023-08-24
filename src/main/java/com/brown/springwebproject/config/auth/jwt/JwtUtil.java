@@ -5,18 +5,12 @@ import com.brown.springwebproject.user.domain.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
-import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtValidators;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Optional;
 
 @Component
@@ -28,16 +22,16 @@ public class JwtUtil {
     @Value("${jwt.secret.key}")
     private String secretKey;
 
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        MacAlgorithm algorithm = MacAlgorithm.HS256;
-        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(new SecretKeySpec(secretKey.getBytes(), algorithm.getName()))
-                .macAlgorithm(algorithm).build();
-        OAuth2TokenValidator<Jwt> withUser = new UserValidator();
-        jwtDecoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault()
-                , withUser));
-        return jwtDecoder;
-    }
+//    @Bean
+//    public JwtDecoder jwtDecoder() {
+//        MacAlgorithm algorithm = MacAlgorithm.HS256;
+//        NimbusJwtDecoder jwtDecoder = NimbusJwtDecoder.withSecretKey(new SecretKeySpec(secretKey.getBytes(), algorithm.getName()))
+//                .macAlgorithm(algorithm).build();
+//        OAuth2TokenValidator<Jwt> withUser = new UserValidator();
+//        jwtDecoder.setJwtValidator(new DelegatingOAuth2TokenValidator<>(JwtValidators.createDefault()
+//                , withUser));
+//        return jwtDecoder;
+//    }
 
     @Bean
     public JwtProvider jwtProvider() {

@@ -42,7 +42,6 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         Map<String, Object> attribute = oAuth2User.getAttributes();
         Users user = userRepository.findByEmail((String) attribute.get("email")).orElseThrow();
-//        Map<String, Object> tokenData = Map.of("email",user.getEmail(), "id",user.getId());
         UserJwtTokenDto token = new UserJwtTokenDto(user.getId(), user.getEmail());
         String accessToken = jwtProvider.generateAccessToken(token);
         String refreshToken = jwtProvider.generateRefreshToken(token);
