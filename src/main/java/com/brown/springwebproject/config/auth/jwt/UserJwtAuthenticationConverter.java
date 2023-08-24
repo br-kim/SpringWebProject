@@ -11,6 +11,7 @@ public class UserJwtAuthenticationConverter extends SimpleJwtAuthenticationConve
 
     @Override
     public AbstractAuthenticationToken convert(Jwt jwt, Collection<GrantedAuthority> authorities) {
+        System.out.println("call converter");
         return new UserJwtToken(jwt, authorities);
     }
 }

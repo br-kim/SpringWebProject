@@ -28,7 +28,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws ServletException, IOException {
-        UserJwtToken userJwtToken = null;
+        UserToken userJwtToken = null;
         try {
             userJwtToken = createUserJwtToken(authentication);
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         getRedirectStrategy().sendRedirect(request,response,getRedirectUrl(targetUrl, userJwtToken));
     }
 
-    private UserJwtToken createUserJwtToken (Authentication authentication) throws Exception {
+    private UserToken createUserJwtToken (Authentication authentication) throws Exception {
         DefaultOAuth2User oAuth2User = (DefaultOAuth2User) authentication.getPrincipal();
         Map<String, Object> attribute = oAuth2User.getAttributes();
         Users user = userRepository.findByEmail((String) attribute.get("email")).orElseThrow();
@@ -46,10 +46,10 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         UserJwtTokenDto token = new UserJwtTokenDto(user.getId(), user.getEmail());
         String accessToken = jwtProvider.generateAccessToken(token);
         String refreshToken = jwtProvider.generateRefreshToken(token);
-        return new UserJwtToken(accessToken, refreshToken);
+        return new UserToken(accessToken, refreshToken);
     }
 
-    private String getRedirectUrl(String targetUrl, UserJwtToken token){
+    private String getRedirectUrl(String targetUrl, UserToken token){
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("accessToken",token.getAccessToken())
                 .queryParam("refreshToken",token.getRefreshToken())

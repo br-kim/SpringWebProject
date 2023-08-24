@@ -4,12 +4,12 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class UserJwtToken {
+public class UserToken {
     private final String accessToken;
     private final String refreshToken;
 
     @Builder
-    public UserJwtToken(String accessToken, String refreshToken){
+    public UserToken(String accessToken, String refreshToken){
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }

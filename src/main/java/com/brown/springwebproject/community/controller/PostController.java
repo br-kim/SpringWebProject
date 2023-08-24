@@ -4,20 +4,19 @@ import com.brown.springwebproject.community.dto.PostCreateRequestDto;
 import com.brown.springwebproject.community.dto.PostCreateResponseDto;
 import com.brown.springwebproject.community.service.PostService;
 import com.brown.springwebproject.config.auth.jwt.UserJwtToken;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-
 import static com.brown.springwebproject.config.auth.jwt.UserJwtContextHolder.getUserJwtToken;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/community")
 public class PostController {
-    private HttpServletRequest request;
-    private PostService postService;
+    private final PostService postService;
 
     @PostMapping("/write")
     public PostCreateResponseDto writeArticle(@RequestBody PostCreateRequestDto requestDto){

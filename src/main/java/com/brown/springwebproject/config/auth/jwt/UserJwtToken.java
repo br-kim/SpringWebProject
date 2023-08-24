@@ -12,6 +12,7 @@ public class UserJwtToken extends JwtAuthenticationToken {
     private final Long id;
     private final String email;
 
+
     public UserJwtToken(Jwt jwt, Collection<? extends GrantedAuthority> authorities) {
         super(jwt, authorities);
         this.id = Long.valueOf(jwt.getClaimAsString("id"));
