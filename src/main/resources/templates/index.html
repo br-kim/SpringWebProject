@@ -1,9 +1,18 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout.html}">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Main Page</title>
+    <script type="text/javascript" th:src="@{/static/index.js}"></script>
+</head>
 <th:block layout:fragment="content">
     <h1>Main Page</h1>
     <form action="/oauth2/authorization/google" method="GET">
         <button class="btn btn-primary">구글 로그인</button>
     </form>
+    <form action="/community/page" method="GET">
+        <button class="btn btn-primary">커뮤니티</button>
+    </form>
 </th:block>
+<th:block th:replace="config"></th:block>
 </html>

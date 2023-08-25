@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>layout</title>
-    <th:bloc th:replace="css"></th:bloc>
+    <th:block th:replace="css"></th:block>
 </head>
 <body>
-<th:bloc layout:fragment="content"></th:bloc>
-<th:bloc th:replace="config"></th:bloc>
+<th:block layout:fragment="content"></th:block>
+<th:block layout:replace="config"></th:block>
+<th:block layout:fragment="f-script"></th:block>
 </body>
 </html>

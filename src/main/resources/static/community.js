@@ -5,7 +5,7 @@ async function writeArticle(){
         title: articleTitle,
         content: articleContent
     }
-    let res = await fetch("/community/write",{
+    let res = await fetch("/community/article/write",{
         method: "POST",
         headers: {
             "Content-Type": "application/json",
