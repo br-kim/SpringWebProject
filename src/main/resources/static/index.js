@@ -17,4 +17,9 @@ function storeTokensFromQueryString() {
     }
 }
 
+async function getLoginUserInfo(){
+    let res = await fetch("/user/me");
+    return await res.json().email;
+}
+
 window.onload = storeTokensFromQueryString;
