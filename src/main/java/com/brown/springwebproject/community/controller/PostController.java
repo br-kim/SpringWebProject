@@ -1,7 +1,7 @@
 package com.brown.springwebproject.community.controller;
 
+import com.brown.springwebproject.community.domain.Post;
 import com.brown.springwebproject.community.dto.PostCreateRequestDto;
-import com.brown.springwebproject.community.dto.PostCreateResponseDto;
 import com.brown.springwebproject.community.dto.PostGetResponseDto;
 import com.brown.springwebproject.community.service.PostService;
 import com.brown.springwebproject.config.auth.oauth2.dto.SessionUser;
@@ -18,10 +18,10 @@ public class PostController {
     private final HttpSession httpSession;
 
     @PostMapping("/write")
-    public PostCreateResponseDto writeArticle(@RequestBody PostCreateRequestDto requestDto){
+    public Long writeArticle(@RequestBody PostCreateRequestDto requestDto){
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
-        postService.createPost(requestDto, user.getEmail());
-        return new PostCreateResponseDto();
+        Post post = postService.createPost(requestDto, user.getEmail());
+        return post.getId();
     }
 
     @GetMapping("")
